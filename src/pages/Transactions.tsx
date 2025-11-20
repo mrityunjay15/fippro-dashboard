@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Download } from "lucide-react";
+import { useState, useMemo } from "react";
 
 const transactions = [
   {
@@ -74,11 +75,47 @@ const transactions = [
 ];
 
 const Transactions = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+
+  const filteredTransactions = useMemo(() => {
+    return transactions.filter((transaction) => {
+      const matchesSearch = transaction.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = typeFilter === "all" || transaction.type.toLowerCase() === typeFilter;
+      const matchesCategory = categoryFilter === "all" || transaction.category.toLowerCase() === categoryFilter;
+      
+      return matchesSearch && matchesType && matchesCategory;
+    });
+  }, [searchQuery, typeFilter, categoryFilter]);
+
+  const handleExport = () => {
+    const csv = [
+      ["Name", "Type", "Category", "Amount", "Date", "Payment", "Notes"],
+      ...filteredTransactions.map(t => [
+        t.name,
+        t.type,
+        t.category,
+        t.amount,
+        t.date,
+        t.payment,
+        t.notes
+      ])
+    ].map(row => row.join(",")).join("\n");
+    
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `transactions-${new Date().toISOString()}.csv`;
+    a.click();
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">All Transactions</h1>
-        <Button>
+        <Button onClick={handleExport}>
           <Download className="w-4 h-4 mr-2" />
           Export
         </Button>
@@ -90,11 +127,16 @@ const Transactions = () => {
             {/* Search */}
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input placeholder="Search transactions..." className="pl-10" />
+              <Input 
+                placeholder="Search transactions..." 
+                className="pl-10" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
 
             {/* Filters */}
-            <Select>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
@@ -105,7 +147,7 @@ const Transactions = () => {
               </SelectContent>
             </Select>
 
-            <Select>
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by category" />
               </SelectTrigger>
@@ -115,6 +157,7 @@ const Transactions = () => {
                 <SelectItem value="travel">Travel</SelectItem>
                 <SelectItem value="bills">Bills</SelectItem>
                 <SelectItem value="salary">Salary</SelectItem>
+                <SelectItem value="freelance">Freelance</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -134,7 +177,14 @@ const Transactions = () => {
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((transaction) => (
+                {filteredTransactions.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="py-8 text-center text-muted-foreground">
+                      No transactions found
+                    </td>
+                  </tr>
+                ) : (
+                  filteredTransactions.map((transaction) => (
                   <tr
                     key={transaction.id}
                     className="border-b border-border last:border-0 hover:bg-muted/50 transition-colors"
@@ -164,7 +214,8 @@ const Transactions = () => {
                     <td className="py-4 text-sm text-muted-foreground">{transaction.payment}</td>
                     <td className="py-4 text-sm text-muted-foreground">{transaction.notes}</td>
                   </tr>
-                ))}
+                  ))
+                )}
               </tbody>
             </table>
           </div>

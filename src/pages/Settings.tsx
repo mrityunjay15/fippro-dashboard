@@ -11,14 +11,44 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useTheme } from "@/hooks/use-theme";
+import { useState } from "react";
 
 const Settings = () => {
   const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
+  const [name, setName] = useState("User");
+  const [email, setEmail] = useState("user@example.com");
+  const [currency, setCurrency] = useState("inr");
+  const [expenseAlerts, setExpenseAlerts] = useState(true);
+  const [productExpiry, setProductExpiry] = useState(true);
+  const [weeklyReports, setWeeklyReports] = useState(false);
 
-  const handleSave = () => {
+  const handleSaveProfile = () => {
     toast({
-      title: "Settings Saved",
-      description: "Your preferences have been updated successfully.",
+      title: "Profile Saved",
+      description: "Your profile has been updated successfully.",
+    });
+  };
+
+  const handleSaveCurrency = () => {
+    toast({
+      title: "Currency Saved",
+      description: "Your currency preference has been updated.",
+    });
+  };
+
+  const handleSaveNotifications = () => {
+    toast({
+      title: "Notifications Saved",
+      description: "Your notification preferences have been updated.",
+    });
+  };
+
+  const handleSaveTheme = () => {
+    toast({
+      title: "Theme Saved",
+      description: "Your theme preference has been updated.",
     });
   };
 
@@ -34,13 +64,13 @@ const Settings = () => {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input id="name" defaultValue="User" />
+            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" defaultValue="user@example.com" />
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          <Button onClick={handleSave}>Save Profile</Button>
+          <Button onClick={handleSaveProfile}>Save Profile</Button>
         </CardContent>
       </Card>
 
@@ -52,7 +82,7 @@ const Settings = () => {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="currency">Default Currency</Label>
-            <Select defaultValue="inr">
+            <Select value={currency} onValueChange={setCurrency}>
               <SelectTrigger>
                 <SelectValue placeholder="Select currency" />
               </SelectTrigger>
@@ -64,7 +94,7 @@ const Settings = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={handleSave}>Save Currency</Button>
+          <Button onClick={handleSaveCurrency}>Save Currency</Button>
         </CardContent>
       </Card>
 
@@ -81,7 +111,7 @@ const Settings = () => {
                 Get notified when expenses exceed budget
               </p>
             </div>
-            <Switch id="expense-alerts" defaultChecked />
+            <Switch id="expense-alerts" checked={expenseAlerts} onCheckedChange={setExpenseAlerts} />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -90,7 +120,7 @@ const Settings = () => {
                 Get notified before products expire
               </p>
             </div>
-            <Switch id="product-expiry" defaultChecked />
+            <Switch id="product-expiry" checked={productExpiry} onCheckedChange={setProductExpiry} />
           </div>
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
@@ -99,9 +129,9 @@ const Settings = () => {
                 Receive weekly financial summaries
               </p>
             </div>
-            <Switch id="weekly-reports" />
+            <Switch id="weekly-reports" checked={weeklyReports} onCheckedChange={setWeeklyReports} />
           </div>
-          <Button onClick={handleSave}>Save Notifications</Button>
+          <Button onClick={handleSaveNotifications}>Save Notifications</Button>
         </CardContent>
       </Card>
 
@@ -113,7 +143,7 @@ const Settings = () => {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="theme">Theme</Label>
-            <Select defaultValue="light">
+            <Select value={theme} onValueChange={(value: any) => setTheme(value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select theme" />
               </SelectTrigger>
@@ -124,7 +154,7 @@ const Settings = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={handleSave}>Save Theme</Button>
+          <Button onClick={handleSaveTheme}>Save Theme</Button>
         </CardContent>
       </Card>
     </div>
