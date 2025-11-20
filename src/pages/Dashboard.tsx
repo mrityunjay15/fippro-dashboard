@@ -1,4 +1,5 @@
 import { StatCard } from "@/components/StatCard";
+import { AISuggestions } from "@/components/AISuggestions";
 import { Wallet, TrendingDown, TrendingUp, Package } from "lucide-react";
 import {
   LineChart,
@@ -111,6 +112,9 @@ const Dashboard = () => {
           variant="warning"
         />
       </div>
+
+      {/* AI Suggestions */}
+      <AISuggestions />
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
