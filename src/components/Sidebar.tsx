@@ -12,6 +12,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
 
 const menuItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -25,6 +26,8 @@ const menuItems = [
 ];
 
 export const Sidebar = () => {
+  const { logout } = useAuth();
+  
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
       {/* Logo */}
@@ -63,7 +66,10 @@ export const Sidebar = () => {
 
       {/* Logout */}
       <div className="p-4 border-t border-sidebar-border">
-        <button className="flex items-center gap-3 px-4 py-3 rounded-lg w-full text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-all duration-200">
+        <button 
+          onClick={logout}
+          className="flex items-center gap-3 px-4 py-3 rounded-lg w-full text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-all duration-200"
+        >
           <LogOut className="w-5 h-5" />
           <span>Logout</span>
         </button>
