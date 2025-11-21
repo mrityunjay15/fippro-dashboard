@@ -77,6 +77,9 @@ export default {
         'DEFAULT': 'var(--shadow)',
         'md': 'var(--shadow-md)',
         'lg': 'var(--shadow-lg)',
+        'neu': 'var(--shadow-neu)',
+        'neu-inset': 'var(--shadow-neu-inset)',
+        'neu-hover': 'var(--shadow-neu-hover)',
       },
       borderRadius: {
         lg: "var(--radius)",
