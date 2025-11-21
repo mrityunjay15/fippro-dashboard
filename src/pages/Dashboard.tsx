@@ -1,6 +1,22 @@
 import { StatCard } from "@/components/StatCard";
 import { AISuggestions } from "@/components/AISuggestions";
-import { Wallet, TrendingDown, TrendingUp, Package } from "lucide-react";
+import { 
+  Wallet, 
+  TrendingDown, 
+  TrendingUp, 
+  Package,
+  ShoppingBag,
+  Utensils,
+  Car,
+  Home,
+  CreditCard,
+  Smartphone,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Plus
+} from "lucide-react";
 import {
   LineChart,
   Line,
@@ -15,6 +31,8 @@ import {
   Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 // Mock data
 const monthlyExpenseData = [
@@ -36,51 +54,113 @@ const categoryData = [
 const recentTransactions = [
   {
     id: 1,
-    name: "Grocery Shopping",
+    title: "Grocery Shopping",
     type: "Expense",
     category: "Food",
     amount: -2500,
     date: "2024-01-15",
-    notes: "Weekly groceries",
+    paymentMode: "UPI",
+    status: "Completed",
+    icon: Utensils,
   },
   {
     id: 2,
-    name: "Salary",
+    title: "Monthly Salary",
     type: "Income",
     category: "Salary",
     amount: 75000,
     date: "2024-01-10",
-    notes: "Monthly salary",
+    paymentMode: "Bank Transfer",
+    status: "Completed",
+    icon: Wallet,
   },
   {
     id: 3,
-    name: "Electricity Bill",
+    title: "Electricity Bill",
     type: "Expense",
     category: "Bills",
     amount: -3200,
     date: "2024-01-12",
-    notes: "January bill",
+    paymentMode: "Net Banking",
+    status: "Completed",
+    icon: Home,
   },
   {
     id: 4,
-    name: "Freelance Project",
+    title: "Freelance Project",
     type: "Income",
     category: "Freelance",
     amount: 15000,
     date: "2024-01-14",
-    notes: "Website development",
+    paymentMode: "UPI",
+    status: "Completed",
+    icon: CreditCard,
+  },
+  {
+    id: 5,
+    title: "Shopping - Electronics",
+    type: "Expense",
+    category: "Shopping",
+    amount: -12500,
+    date: "2024-01-13",
+    paymentMode: "Credit Card",
+    status: "Pending",
+    icon: ShoppingBag,
   },
 ];
 
 const expiringProducts = [
-  { name: "Milk", daysLeft: 2, expiryDate: "2024-01-17", status: "danger" },
-  { name: "Bread", daysLeft: 5, expiryDate: "2024-01-20", status: "warning" },
-  { name: "Cheese", daysLeft: 10, expiryDate: "2024-01-25", status: "success" },
+  { 
+    name: "Milk (Amul)", 
+    quantity: "1L",
+    daysLeft: 2, 
+    expiryDate: "Jan 17, 2024", 
+    status: "danger",
+    image: "🥛"
+  },
+  { 
+    name: "Bread (Modern)", 
+    quantity: "400g",
+    daysLeft: 5, 
+    expiryDate: "Jan 20, 2024", 
+    status: "warning",
+    image: "🍞"
+  },
+  { 
+    name: "Paneer (Mother Dairy)", 
+    quantity: "200g",
+    daysLeft: 10, 
+    expiryDate: "Jan 25, 2024", 
+    status: "success",
+    image: "🧀"
+  },
+  { 
+    name: "Yogurt (Amul)", 
+    quantity: "400g",
+    daysLeft: 3, 
+    expiryDate: "Jan 18, 2024", 
+    status: "danger",
+    image: "🥄"
+  },
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const getStatusIcon = (status: string) => {
+    if (status === "Completed") return <CheckCircle2 className="w-4 h-4 text-success" />;
+    if (status === "Pending") return <Clock className="w-4 h-4 text-warning" />;
+    return <AlertCircle className="w-4 h-4 text-muted-foreground" />;
+  };
+
+  const getStatusColor = (status: string) => {
+    if (status === "danger") return "bg-destructive/10 text-destructive border-destructive/20";
+    if (status === "warning") return "bg-warning/10 text-warning border-warning/20";
+    return "bg-success/10 text-success border-success/20";
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in p-1">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
@@ -106,7 +186,7 @@ const Dashboard = () => {
         />
         <StatCard
           title="Products Near Expiry"
-          value="3"
+          value="4"
           subtitle="Action required"
           icon={Package}
           variant="warning"
@@ -119,21 +199,29 @@ const Dashboard = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Expense Chart */}
-        <Card>
+        <Card className="hover:shadow-neu-hover">
           <CardHeader>
-            <CardTitle>Monthly Expense Trend</CardTitle>
+            <CardTitle className="text-xl font-bold">Monthly Expense Trend</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={monthlyExpenseData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" stroke="hsl(var(--foreground))" />
-                <YAxis stroke="hsl(var(--foreground))" />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="hsl(var(--foreground))"
+                  style={{ fontSize: '12px', fontWeight: 600 }}
+                />
+                <YAxis 
+                  stroke="hsl(var(--foreground))"
+                  style={{ fontSize: '12px', fontWeight: 600 }}
+                />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
-                    borderRadius: "8px",
+                    borderRadius: "12px",
+                    boxShadow: "var(--shadow-md)",
                   }}
                   formatter={(value: number) => `₹${value.toLocaleString()}`}
                 />
@@ -142,7 +230,8 @@ const Dashboard = () => {
                   dataKey="expense"
                   stroke="hsl(var(--primary))"
                   strokeWidth={3}
-                  dot={{ fill: "hsl(var(--primary))" }}
+                  dot={{ fill: "hsl(var(--primary))", r: 5 }}
+                  activeDot={{ r: 7 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -150,9 +239,9 @@ const Dashboard = () => {
         </Card>
 
         {/* Category Pie Chart */}
-        <Card>
+        <Card className="hover:shadow-neu-hover">
           <CardHeader>
-            <CardTitle>Category-wise Spending</CardTitle>
+            <CardTitle className="text-xl font-bold">Category-wise Spending</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -181,81 +270,117 @@ const Dashboard = () => {
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Transactions */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 hover:shadow-neu-hover">
           <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
+            <CardTitle className="text-xl font-bold">Recent Transactions</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-border text-left text-sm text-muted-foreground">
-                    <th className="pb-3 font-medium">Name</th>
-                    <th className="pb-3 font-medium">Type</th>
-                    <th className="pb-3 font-medium">Category</th>
-                    <th className="pb-3 font-medium text-right">Amount</th>
-                    <th className="pb-3 font-medium">Date</th>
+                  <tr className="border-b-2 border-border text-left">
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Category</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Title</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Amount</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Payment</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Date</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Type</th>
+                    <th className="pb-4 font-bold text-sm text-foreground uppercase tracking-wide">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {recentTransactions.map((transaction, index) => (
-                    <tr
-                      key={transaction.id}
-                      className="border-b border-border last:border-0 hover:bg-muted/50 transition-colors"
-                    >
-                      <td className="py-3 text-sm">{transaction.name}</td>
-                      <td className="py-3">
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            transaction.type === "Income"
-                              ? "bg-success/10 text-success"
-                              : "bg-destructive/10 text-destructive"
-                          }`}
-                        >
-                          {transaction.type}
-                        </span>
-                      </td>
-                      <td className="py-3 text-sm text-muted-foreground">{transaction.category}</td>
-                      <td
-                        className={`py-3 text-sm text-right font-semibold ${
-                          transaction.amount > 0 ? "text-success" : "text-destructive"
-                        }`}
+                  {recentTransactions.map((transaction) => {
+                    const IconComponent = transaction.icon;
+                    return (
+                      <tr
+                        key={transaction.id}
+                        className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors"
                       >
-                        {transaction.amount > 0 ? "+" : ""}₹{Math.abs(transaction.amount).toLocaleString()}
-                      </td>
-                      <td className="py-3 text-sm text-muted-foreground">{transaction.date}</td>
-                    </tr>
-                  ))}
+                        <td className="py-4">
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <IconComponent className="w-5 h-5 text-primary" strokeWidth={2.5} />
+                          </div>
+                        </td>
+                        <td className="py-4">
+                          <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-foreground">{transaction.title}</span>
+                            <span className="text-xs text-muted-foreground">{transaction.category}</span>
+                          </div>
+                        </td>
+                        <td className="py-4">
+                          <span
+                            className={`text-sm font-bold ${
+                              transaction.amount > 0 ? "text-success" : "text-destructive"
+                            }`}
+                          >
+                            {transaction.amount > 0 ? "+" : ""}₹{Math.abs(transaction.amount).toLocaleString()}
+                          </span>
+                        </td>
+                        <td className="py-4">
+                          <span className="text-sm text-muted-foreground font-medium">{transaction.paymentMode}</span>
+                        </td>
+                        <td className="py-4">
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Calendar className="w-4 h-4" />
+                            <span className="font-medium">{transaction.date}</span>
+                          </div>
+                        </td>
+                        <td className="py-4">
+                          <span
+                            className={`text-xs px-3 py-1.5 rounded-full font-semibold ${
+                              transaction.type === "Income"
+                                ? "bg-success/10 text-success"
+                                : "bg-destructive/10 text-destructive"
+                            }`}
+                          >
+                            {transaction.type}
+                          </span>
+                        </td>
+                        <td className="py-4">
+                          <div className="flex items-center gap-2">
+                            {getStatusIcon(transaction.status)}
+                            <span className="text-xs font-medium text-muted-foreground">{transaction.status}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
           </CardContent>
         </Card>
 
-        {/* Expiry Tracker */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Products Near Expiry</CardTitle>
+        {/* Product Expiry Tracker */}
+        <Card className="hover:shadow-neu-hover">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-xl font-bold">Products Near Expiry</CardTitle>
+            <Button 
+              size="sm" 
+              className="shadow-neu hover:shadow-neu-hover"
+              onClick={() => navigate('/products')}
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add
+            </Button>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {expiringProducts.map((product, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-2xl shadow-neu-inset hover:shadow-neu transition-all duration-300"
                 >
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium">{product.name}</h4>
-                    <p className="text-xs text-muted-foreground">{product.expiryDate}</p>
+                  <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center text-3xl shadow-md">
+                    {product.image}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-bold text-foreground truncate">{product.name}</h4>
+                    <p className="text-xs text-muted-foreground font-medium">Qty: {product.quantity}</p>
+                    <p className="text-xs text-muted-foreground font-medium mt-1">Expires: {product.expiryDate}</p>
                   </div>
                   <div
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      product.status === "danger"
-                        ? "bg-destructive/10 text-destructive"
-                        : product.status === "warning"
-                        ? "bg-warning/10 text-warning"
-                        : "bg-success/10 text-success"
-                    }`}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border-2 ${getStatusColor(product.status)}`}
                   >
                     {product.daysLeft}d left
                   </div>

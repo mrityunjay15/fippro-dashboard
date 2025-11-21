@@ -24,15 +24,15 @@ export const StatCard = ({
   };
 
   return (
-    <div className="bg-card rounded-xl p-6 border border-border shadow-md hover:shadow-lg transition-all duration-300 animate-fade-in">
+    <div className="bg-card rounded-2xl p-6 shadow-neu hover:shadow-neu-hover transition-all duration-300 animate-fade-in">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm text-muted-foreground mb-1">{title}</p>
-          <h3 className="text-3xl font-bold text-card-foreground mb-1">{value}</h3>
-          <p className="text-xs text-muted-foreground">{subtitle}</p>
+          <p className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wide">{title}</p>
+          <h3 className="text-4xl font-bold text-card-foreground mb-2 tracking-tight">{value}</h3>
+          <p className="text-xs text-muted-foreground font-medium">{subtitle}</p>
         </div>
-        <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center", gradientClasses[variant])}>
-          <Icon className="w-6 h-6 text-white" />
+        <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center shadow-md", gradientClasses[variant])}>
+          <Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
         </div>
       </div>
     </div>
