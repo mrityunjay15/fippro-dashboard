@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   { id: 1, name: "Food", type: "Expense", color: "#FF6384", transactions: 45 },
@@ -15,6 +16,7 @@ const categories = [
 
 const Categories = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleDelete = (categoryName: string) => {
     toast({
@@ -28,7 +30,7 @@ const Categories = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Categories</h1>
-        <Button>
+        <Button onClick={() => navigate("/add-category")}>
           <Plus className="w-4 h-4 mr-2" />
           Add Category
         </Button>

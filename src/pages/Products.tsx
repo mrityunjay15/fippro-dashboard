@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const products = [
   {
@@ -56,6 +57,7 @@ const products = [
 
 const Products = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleDelete = (productName: string) => {
     toast({
@@ -82,7 +84,7 @@ const Products = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Product Expiry Tracker</h1>
-        <Button>
+        <Button onClick={() => navigate("/add-product")}>
           <Plus className="w-4 h-4 mr-2" />
           Add Product
         </Button>
