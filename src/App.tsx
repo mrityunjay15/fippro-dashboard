@@ -12,8 +12,10 @@ import AddExpense from "./pages/AddExpense";
 import AddIncome from "./pages/AddIncome";
 import Transactions from "./pages/Transactions";
 import Categories from "./pages/Categories";
+import AddCategory from "./pages/AddCategory";
 import Reports from "./pages/Reports";
 import Products from "./pages/Products";
+import AddProduct from "./pages/AddProduct";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -45,8 +47,10 @@ const App = () => (
                 <Route path="/add-income" element={<AddIncome />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/categories" element={<Categories />} />
+                <Route path="/add-category" element={<AddCategory />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/add-product" element={<AddProduct />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
               
