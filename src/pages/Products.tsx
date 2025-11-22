@@ -82,15 +82,18 @@ const Products = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Product Expiry Tracker</h1>
-        <Button onClick={() => navigate("/add-product")}>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold">Product Expiry Tracker</h1>
+        <Button 
+          onClick={() => navigate("/add-product")}
+          className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Product
         </Button>
       </div>
 
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>All Products</CardTitle>
         </CardHeader>
@@ -136,7 +139,12 @@ const Products = () => {
                     </td>
                     <td className="py-4">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 hover:bg-primary/10 transition-all duration-300"
+                          onClick={() => navigate("/add-product", { state: { product } })}
+                        >
                           <Edit className="w-4 h-4" />
                         </Button>
                         <Button

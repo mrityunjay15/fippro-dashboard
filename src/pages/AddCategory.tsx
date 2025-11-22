@@ -9,29 +9,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AddCategory = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [color, setColor] = useState("#FF6384");
+  const location = useLocation();
+  const editData = location.state?.category;
+  
+  const [name, setName] = useState(editData?.name || "");
+  const [type, setType] = useState(editData?.type?.toLowerCase() || "");
+  const [color, setColor] = useState(editData?.color || "#FF6384");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Category Added",
-      description: "Your category has been created successfully.",
+      title: editData ? "Category Updated" : "Category Added",
+      description: editData 
+        ? "Your category has been updated successfully."
+        : "Your category has been created successfully.",
     });
     navigate("/categories");
   };
 
   return (
-    <div className="max-w-2xl animate-fade-in">
-      <h1 className="text-3xl font-bold mb-6">Add Category</h1>
+    <div className="max-w-2xl animate-fade-in mx-auto">
+      <h1 className="text-3xl font-bold mb-6">{editData ? "Edit" : "Add"} Category</h1>
       
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Category Details</CardTitle>
         </CardHeader>
@@ -45,6 +52,8 @@ const AddCategory = () => {
                 type="text"
                 placeholder="Enter category name"
                 className="text-lg"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -52,7 +61,7 @@ const AddCategory = () => {
             {/* Category Type */}
             <div className="space-y-2">
               <Label htmlFor="type">Category Type</Label>
-              <Select required>
+              <Select value={type} onValueChange={setType} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -95,8 +104,12 @@ const AddCategory = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1" size="lg">
-                Add Category
+              <Button 
+                type="submit" 
+                className="flex-1 bg-gradient-primary hover:shadow-neu-hover transition-all duration-300" 
+                size="lg"
+              >
+                {editData ? "Update" : "Add"} Category
               </Button>
             </div>
           </form>

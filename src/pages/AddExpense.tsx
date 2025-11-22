@@ -31,10 +31,10 @@ const AddExpense = () => {
   };
 
   return (
-    <div className="max-w-2xl animate-fade-in">
+    <div className="max-w-2xl animate-fade-in mx-auto">
       <h1 className="text-3xl font-bold mb-6">Add Expense</h1>
       
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Expense Details</CardTitle>
         </CardHeader>
@@ -126,7 +126,11 @@ const AddExpense = () => {
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full" size="lg">
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-danger hover:shadow-neu-hover transition-all duration-300" 
+              size="lg"
+            >
               Add Expense
             </Button>
           </form>

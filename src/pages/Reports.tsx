@@ -32,10 +32,10 @@ const categorySpending = [
 const Reports = () => {
   return (
     <div className="space-y-6 animate-fade-in">
-      <h1 className="text-3xl font-bold">Reports & Analytics</h1>
+      <h1 className="text-2xl md:text-3xl font-bold">Reports & Analytics</h1>
 
       {/* Income vs Expense */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Income vs Expense Comparison</CardTitle>
         </CardHeader>
@@ -74,7 +74,7 @@ const Reports = () => {
       </Card>
 
       {/* Category Bar Chart */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Top Spending Categories</CardTitle>
         </CardHeader>
@@ -99,33 +99,33 @@ const Reports = () => {
       </Card>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-base">Total Income (6 months)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-success">₹4,90,000</p>
+            <p className="text-2xl md:text-3xl font-bold text-success">₹4,90,000</p>
             <p className="text-sm text-muted-foreground mt-1">+8% from last period</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-base">Total Expense (6 months)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-destructive">₹2,53,000</p>
+            <p className="text-2xl md:text-3xl font-bold text-destructive">₹2,53,000</p>
             <p className="text-sm text-muted-foreground mt-1">+5% from last period</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-base">Net Savings</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-primary">₹2,37,000</p>
+            <p className="text-2xl md:text-3xl font-bold text-primary">₹2,37,000</p>
             <p className="text-sm text-muted-foreground mt-1">48% savings rate</p>
           </CardContent>
         </Card>

@@ -113,15 +113,18 @@ const Transactions = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">All Transactions</h1>
-        <Button onClick={handleExport}>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold">All Transactions</h1>
+        <Button 
+          onClick={handleExport}
+          className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+        >
           <Download className="w-4 h-4 mr-2" />
           Export
         </Button>
       </div>
 
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search */}
@@ -137,7 +140,7 @@ const Transactions = () => {
 
             {/* Filters */}
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
               <SelectContent>
@@ -148,7 +151,7 @@ const Transactions = () => {
             </Select>
 
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Filter by category" />
               </SelectTrigger>
               <SelectContent>

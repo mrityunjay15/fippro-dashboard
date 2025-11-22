@@ -7,7 +7,7 @@ const Layout = () => {
     <div className="min-h-screen bg-background">
       <Sidebar />
       <TopNav />
-      <main className="ml-64 mt-16 p-8">
+      <main className="md:ml-64 mt-16 p-4 md:p-8 max-w-full overflow-x-hidden">
         <Outlet />
       </main>
     </div>

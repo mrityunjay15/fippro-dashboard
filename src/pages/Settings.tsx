@@ -53,11 +53,11 @@ const Settings = () => {
   };
 
   return (
-    <div className="max-w-3xl space-y-6 animate-fade-in">
-      <h1 className="text-3xl font-bold">Settings</h1>
+    <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
+      <h1 className="text-2xl md:text-3xl font-bold">Settings</h1>
 
       {/* Profile Settings */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Profile Details</CardTitle>
         </CardHeader>
@@ -70,12 +70,17 @@ const Settings = () => {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          <Button onClick={handleSaveProfile}>Save Profile</Button>
+          <Button 
+            onClick={handleSaveProfile}
+            className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+          >
+            Save Profile
+          </Button>
         </CardContent>
       </Card>
 
       {/* Currency Settings */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Currency Preferences</CardTitle>
         </CardHeader>
@@ -94,12 +99,17 @@ const Settings = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={handleSaveCurrency}>Save Currency</Button>
+          <Button 
+            onClick={handleSaveCurrency}
+            className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+          >
+            Save Currency
+          </Button>
         </CardContent>
       </Card>
 
       {/* Notification Settings */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Notification Preferences</CardTitle>
         </CardHeader>
@@ -131,12 +141,17 @@ const Settings = () => {
             </div>
             <Switch id="weekly-reports" checked={weeklyReports} onCheckedChange={setWeeklyReports} />
           </div>
-          <Button onClick={handleSaveNotifications}>Save Notifications</Button>
+          <Button 
+            onClick={handleSaveNotifications}
+            className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+          >
+            Save Notifications
+          </Button>
         </CardContent>
       </Card>
 
       {/* Theme Settings */}
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Appearance</CardTitle>
         </CardHeader>
@@ -154,7 +169,12 @@ const Settings = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={handleSaveTheme}>Save Theme</Button>
+          <Button 
+            onClick={handleSaveTheme}
+            className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+          >
+            Save Theme
+          </Button>
         </CardContent>
       </Card>
     </div>
