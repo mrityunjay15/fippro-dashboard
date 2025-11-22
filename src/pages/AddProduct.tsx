@@ -10,28 +10,41 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AddProduct = () => {
-  const [purchaseDate, setPurchaseDate] = useState<Date>();
-  const [expiryDate, setExpiryDate] = useState<Date>();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  const editData = location.state?.product;
+  
+  const [name, setName] = useState(editData?.name || "");
+  const [quantity, setQuantity] = useState(editData?.quantity || "");
+  const [amount, setAmount] = useState(editData?.amount || "");
+  const [notes, setNotes] = useState(editData?.notes || "");
+  const [purchaseDate, setPurchaseDate] = useState<Date | undefined>(
+    editData?.purchaseDate ? new Date(editData.purchaseDate) : undefined
+  );
+  const [expiryDate, setExpiryDate] = useState<Date | undefined>(
+    editData?.expiryDate ? new Date(editData.expiryDate) : undefined
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Product Added",
-      description: "Your product has been added to the tracker successfully.",
+      title: editData ? "Product Updated" : "Product Added",
+      description: editData 
+        ? "Your product has been updated successfully."
+        : "Your product has been added to the tracker.",
     });
     navigate("/products");
   };
 
   return (
-    <div className="max-w-2xl animate-fade-in">
-      <h1 className="text-3xl font-bold mb-6">Add Product</h1>
+    <div className="max-w-2xl animate-fade-in mx-auto">
+      <h1 className="text-3xl font-bold mb-6">{editData ? "Edit" : "Add"} Product</h1>
       
-      <Card>
+      <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300">
         <CardHeader>
           <CardTitle>Product Details</CardTitle>
         </CardHeader>
@@ -45,6 +58,8 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Enter product name"
                 className="text-lg"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -54,9 +69,10 @@ const AddProduct = () => {
               <Label htmlFor="quantity">Quantity</Label>
               <Input
                 id="quantity"
-                type="number"
-                placeholder="Enter quantity"
-                min="1"
+                type="text"
+                placeholder="e.g., 500g, 1L, 2 units"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
                 required
               />
             </div>
@@ -68,9 +84,8 @@ const AddProduct = () => {
                 id="amount"
                 type="number"
                 placeholder="0.00"
-                className="text-lg"
-                step="0.01"
-                min="0"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 required
               />
             </div>
@@ -138,6 +153,8 @@ const AddProduct = () => {
                 id="notes"
                 placeholder="Add any additional details..."
                 rows={4}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
 
@@ -151,8 +168,12 @@ const AddProduct = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1" size="lg">
-                Add Product
+              <Button 
+                type="submit" 
+                className="flex-1 bg-gradient-primary hover:shadow-neu-hover transition-all duration-300" 
+                size="lg"
+              >
+                {editData ? "Update" : "Add"} Product
               </Button>
             </div>
           </form>

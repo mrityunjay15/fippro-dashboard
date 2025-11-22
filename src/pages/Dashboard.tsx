@@ -160,9 +160,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in p-1">
+    <div className="space-y-6 md:space-y-8 animate-fade-in">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <StatCard
           title="Total Balance"
           value="₹85,450"
@@ -197,9 +197,9 @@ const Dashboard = () => {
       <AISuggestions />
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Monthly Expense Chart */}
-        <Card className="hover:shadow-neu-hover">
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 animate-scale-in">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Monthly Expense Trend</CardTitle>
           </CardHeader>
@@ -239,7 +239,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Category Pie Chart */}
-        <Card className="hover:shadow-neu-hover">
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 animate-scale-in">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Category-wise Spending</CardTitle>
           </CardHeader>
@@ -268,9 +268,9 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Recent Transactions */}
-        <Card className="lg:col-span-2 hover:shadow-neu-hover">
+        <Card className="lg:col-span-2 shadow-neu hover:shadow-neu-hover transition-all duration-300 animate-scale-in">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Recent Transactions</CardTitle>
           </CardHeader>
@@ -352,12 +352,12 @@ const Dashboard = () => {
         </Card>
 
         {/* Product Expiry Tracker */}
-        <Card className="hover:shadow-neu-hover">
+        <Card className="shadow-neu hover:shadow-neu-hover transition-all duration-300 animate-scale-in">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-xl font-bold">Products Near Expiry</CardTitle>
             <Button 
               size="sm" 
-              className="shadow-neu hover:shadow-neu-hover"
+              className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
               onClick={() => navigate('/products')}
             >
               <Plus className="w-4 h-4 mr-1" />

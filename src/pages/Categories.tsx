@@ -28,9 +28,12 @@ const Categories = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold">Categories</h1>
-        <Button onClick={() => navigate("/add-category")}>
+        <Button 
+          onClick={() => navigate("/add-category")}
+          className="bg-gradient-primary hover:shadow-neu-hover transition-all duration-300"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Category
         </Button>
@@ -38,7 +41,7 @@ const Categories = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category) => (
-          <Card key={category.id} className="hover:shadow-lg transition-all duration-300">
+          <Card key={category.id} className="hover:shadow-neu-hover transition-all duration-300 shadow-neu animate-scale-in">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -59,7 +62,12 @@ const Categories = () => {
                   </div>
                 </div>
                 <div className="flex gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8 hover:bg-primary/10 transition-all duration-300"
+                    onClick={() => navigate("/add-category", { state: { category } })}
+                  >
                     <Edit className="w-4 h-4" />
                   </Button>
                   <Button
